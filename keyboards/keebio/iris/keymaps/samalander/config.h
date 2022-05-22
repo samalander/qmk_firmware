@@ -19,3 +19,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // #define USE_I2C
 #define EE_HANDS
+
+// Compile-size restrictions
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
+#define NO_MUSIC_MODE
+#define LAYER_STATE_8BIT
+
+// Tapping Term
+#define TAPPING_TERM 200
+#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT
+
+// Allow LEDs to react to both sides of the keyboard
+#define SPLIT_TRANSPORT_MIRROR
