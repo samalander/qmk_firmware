@@ -34,3 +34,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Allow LEDs to react to both sides of the keyboard
 #define SPLIT_TRANSPORT_MIRROR
 #define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_LED_STATE_ENABLE
