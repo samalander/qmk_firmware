@@ -19,10 +19,10 @@ enum layer_names {
 #define HRM_T MT(MOD_LSFT, KC_T)
 #define HRM_X MT(MOD_RALT, KC_X)
 // Home-row Modifiers Right
-#define HRM_N MT(MOD_LSFT, KC_N)
-#define HRM_E MT(MOD_LCTL, KC_E)
+#define HRM_N MT(MOD_RSFT, KC_N)
+#define HRM_E MT(MOD_RCTL, KC_E)
 #define HRM_I MT(MOD_LALT, KC_I)
-#define HRM_O MT(MOD_LGUI, KC_O)
+#define HRM_O MT(MOD_RGUI, KC_O)
 #define HRM_DT MT(MOD_RALT, KC_DOT)
 
 // Layer switching
