@@ -36,6 +36,7 @@ enum layer_names {
 // Tap Dance declarations
 enum {
     TD_BRC = 0,
+    TD_QG,
     TD_PRN,
 };
 
@@ -43,6 +44,8 @@ enum {
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for left bracket, twice for right bracket
     [TD_BRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
+    // Tap once for single quote, twice for backtick
+    [TD_QG] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_GRV),
     // Tap once for left parenthesis, twice for right parenthesis
     [TD_PRN] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN, KC_RPRN),
 };
@@ -52,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
     KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,     XXXXXXX,                        XXXXXXX, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    CW_TOGG,
     KC_EQL,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,     XXXXXXX,                        XXXXXXX, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINS,
-    TD(TD_BRC),HRM_A,   HRM_R,   HRM_S,   HRM_T,   KC_G,     XXXXXXX,                        XXXXXXX, KC_M,    HRM_N,   HRM_E,   HRM_I,   HRM_O,   KC_QUOT,
+    TD(TD_BRC),HRM_A,   HRM_R,   HRM_S,   HRM_T,   KC_G,     XXXXXXX,                        XXXXXXX, KC_M,    HRM_N,   HRM_E,   HRM_I,   HRM_O,   TD(TD_QG),
     TD(TD_PRN),KC_Z,    HRM_X,   KC_C,    KC_D,    KC_V,     XXXXXXX,                        XXXXXXX, KC_K,    KC_H,    KC_COMM, HRM_DT,  KC_SLSH, KC_BSLS,
     XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX,          LS_MEDIA, LS_MOUSE, LS_NAV,       LS_NUM, LS_SYM,  LS_FUN,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   ),
