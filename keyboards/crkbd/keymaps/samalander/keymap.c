@@ -19,6 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+#ifdef RGBLIGHT_TIMEOUT
+    static uint16_t idle_timer = 0;
+    static uint8_t halfmin_counter = 0;
+    static bool rgblight_on = true;
+#endif
+
 enum layer_names {
     _BASE = 0,
     _NAV,
@@ -203,10 +209,39 @@ bool oled_task_user(void) {
     return false;
 }
 
+#endif // OLED_ENABLE
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-    set_keylog(keycode, record);
+    #ifdef OLED_ENABLE
+        set_keylog(keycode, record);
+    #endif // OLED_ENABLE
+    #ifdef RGBLIGHT_TIMEOUT
+        if (rgblight_on == false) {
+            rgblight_enable_noeeprom();
+            rgblight_on = true;
+        }
+        idle_timer = timer_read();
+        halfmin_counter = 0;
+    #endif // RGBLIGHT_TIMEOUT
   }
   return true;
 }
-#endif // OLED_ENABLE
+
+#ifdef RGBLIGHT_TIMEOUT
+void matrix_scan_user(void) {
+    // idle_timer needs to be set one time
+    if (idle_timer == 0) idle_timer = timer_read();
+
+    if ( rgblight_on && timer_elapsed(idle_timer) > 30000) {
+        halfmin_counter++;
+        idle_timer = timer_read();
+    }
+
+    if ( rgblight_on && halfmin_counter >= RGBLIGHT_TIMEOUT * 2) {
+        rgblight_disable_noeeprom();
+        rgblight_on = false;
+        halfmin_counter = 0;
+    }
+}
+#endif // RGBLIGHT_TIMEOUT

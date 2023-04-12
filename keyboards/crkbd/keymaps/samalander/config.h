@@ -29,6 +29,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 #ifdef RGBLIGHT_ENABLE
+    #define RGBLIGHT_SLEEP
+    #define RGBLIGHT_TIMEOUT 5
+    #define RGBLIGHT_SPLIT
     #define RGBLIGHT_EFFECT_BREATHING
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD
     #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
