@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 // #define USE_I2C
-#define EE_HANDS
+// #define EE_HANDS
+#define MASTER_LEFT
 
 // Compile-size restrictions
 #undef LOCKING_SUPPORT_ENABLE
@@ -30,6 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
+#define QUICK_TAP_TERM 75
+#define TAPPING_TERM_PER_KEY
 
 // Allow LEDs to react to both sides of the keyboard
 #define SPLIT_TRANSPORT_MIRROR
