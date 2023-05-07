@@ -6,6 +6,7 @@ TAP_DANCE_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 COMBO_ENABLE = yes
 MOUSEKEY_ENABLE = yes
+DYNAMIC_TAPPING_TERM_ENABLE = yes
 # Space reduction https://docs.qmk.fm/#/squeezing_avr
 LTO_ENABLE = yes
 CONSOLE_ENABLE = no
