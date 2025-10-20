@@ -39,14 +39,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef TAPPING_TERM
 #define TAPPING_TERM 200
 #define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
+#define CHORDAL_HOLD
 #define QUICK_TAP_TERM 75
 #define TAPPING_TERM_PER_KEY
 
 // RGB Lighting
 #define RGBLIGHT_LAYERS
 #define RGBLIGHT_SPLIT
-#define RGBLED_NUM 24
+//#define RGBLED_NUM 24
 #define RGBLED_SPLIT { 12, 12 }
 #define RGBLIGHT_SLEEP
 #define RGBLIGHT_LIMIT_VAL 100
