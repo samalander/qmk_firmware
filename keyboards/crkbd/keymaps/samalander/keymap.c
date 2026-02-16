@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#include <stdio.h>
 
 #ifdef RGBLIGHT_TIMEOUT
     static uint16_t idle_timer = 0;
@@ -36,17 +35,17 @@ enum layer_names {
 };
 
 // Home-row Modifiers Left
-#define HRM_A MT(MOD_LGUI, KC_A)
-#define HRM_R MT(MOD_LALT, KC_R)
-#define HRM_S MT(MOD_LCTL, KC_S)
-#define HRM_T MT(MOD_LSFT, KC_T)
-#define HRM_X MT(MOD_RALT, KC_X)
+#define HRM_Z MT(MOD_LGUI, KC_Z)
+#define HRM_X MT(MOD_LALT, KC_X)
+#define HRM_C MT(MOD_LCTL, KC_C)
+#define HRM_D MT(MOD_LSFT, KC_D)
+#define HRM_W MT(MOD_RALT, KC_W)
 // Home-row Modifiers Right
-#define HRM_N MT(MOD_RSFT, KC_N)
-#define HRM_E MT(MOD_RCTL, KC_E)
-#define HRM_I MT(MOD_LALT, KC_I)
-#define HRM_O MT(MOD_RGUI, KC_O)
-#define HRM_DT MT(MOD_RALT, KC_DOT)
+#define HRM_H MT(MOD_RSFT, KC_H)
+#define HRM_COMM MT(MOD_RCTL, KC_COMM)
+#define HRM_DOT MT(MOD_LALT, KC_DOT)
+#define HRM_SLSH MT(MOD_RGUI, KC_SLSH)
+#define HRM_Y MT(MOD_RALT, KC_Y)
 
 // Layer switching
 #define LS_NAV LT(_NAV, KC_SPC)
@@ -56,98 +55,61 @@ enum layer_names {
 #define LS_SYM LT(_SYM, KC_ENT)
 #define LS_FUN LT(_FUN, KC_DEL)
 
-// Tap Dance declarations
-enum {
-    TD_BRC = 0,
-    TD_QG,
-    TD_PRN,
-};
-
-// Tap Dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for left bracket, twice for right bracket
-    [TD_BRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
-    // Tap once for single quote, twice for backtick
-    [TD_QG] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_GRV),
-    // Tap once for left parenthesis, twice for right parenthesis
-    [TD_PRN] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN, KC_RPRN),
-};
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_split_3x6_3(
-    KC_EQL,    KC_Q,    KC_W,    KC_F,    KC_P,     KC_B,                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINS,
-    TD(TD_BRC),HRM_A,   HRM_R,   HRM_S,   HRM_T,    KC_G,                        KC_M,    HRM_N,   HRM_E,   HRM_I,   HRM_O,   TD(TD_QG),
-    TD(TD_PRN),KC_Z,    HRM_X,   KC_C,    KC_D,     KC_V,                        KC_K,    KC_H,    KC_COMM, HRM_DT,  KC_SLSH, KC_BSLS,
+    KC_EQL,    KC_Q,    HRM_W,   KC_F,    KC_P,     KC_B,                        KC_J,    KC_L,    KC_U,    HRM_Y,   KC_SCLN, KC_MINS,
+    KC_LBRC,   KC_A,    KC_R,    KC_S,    KC_T,     KC_G,                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+    KC_LPRN,   HRM_Z,   HRM_X,   HRM_C,   HRM_D,    KC_V,                        KC_K,    HRM_H,   HRM_COMM,HRM_DOT, HRM_SLSH,KC_BSLS,
                                           LS_MEDIA, LS_MOUSE, LS_NAV,    LS_NUM, LS_SYM,  LS_FUN
   ),
 
   [_NAV] = LAYOUT_split_3x6_3(
-    XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        KC_AGIN, KC_PSTE, KC_COPY, KC_CUT,  KC_UNDO, XXXXXXX,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                        KC_CAPS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, CW_TOGG,
-    XXXXXXX, XXXXXXX, KC_RALT, XXXXXXX, XXXXXXX, XXXXXXX,                        KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX,
+    XXXXXXX, QK_BOOT, KC_RALT, XXXXXXX, XXXXXXX, XXXXXXX,                        KC_AGIN, KC_PSTE, KC_COPY, KC_CUT,  KC_UNDO, CW_TOGG,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        KC_CAPS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_GRV,
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                        KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX,
                                         XXXXXXX, XXXXXXX, _______,      KC_BSPC, KC_ENT,  KC_DEL
   ),
 
   [_MOUSE] = LAYOUT_split_3x6_3(
-    XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        KC_AGIN, KC_PSTE, KC_COPY, KC_CUT,  KC_UNDO, XXXXXXX,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                        XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX,
-    XXXXXXX, XXXXXXX, KC_RALT, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, XXXXXXX,
-                                        XXXXXXX, _______, XXXXXXX,      KC_BTN1, KC_BTN2, KC_BTN3
+    XXXXXXX, QK_BOOT, KC_RALT, XXXXXXX, XXXXXXX, XXXXXXX,                        KC_AGIN, KC_PSTE, KC_COPY, KC_CUT,  KC_UNDO, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX, MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, XXXXXXX,
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                        XXXXXXX, MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, XXXXXXX,
+                                        XXXXXXX, _______, XXXXXXX,      MS_BTN1, MS_BTN2, MS_BTN3
   ),
 
   [_MEDIA] = LAYOUT_split_3x6_3(
-    XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                        XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX,
-    XXXXXXX, XXXXXXX, KC_RALT, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX, DT_PRNT, DT_DOWN, DT_UP,   XXXXXXX, XXXXXXX,
+    XXXXXXX, QK_BOOT, KC_RALT, XXXXXXX, XXXXXXX, XXXXXXX,                        RM_TOGG, RM_NEXT, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX,
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                        XXXXXXX, RM_PREV, RM_HUED, RM_SATD, RM_VALD, RM_SPDD,
                                         _______, XXXXXXX, XXXXXXX,      KC_MPLY, KC_MSTP, KC_MUTE
   ),
 
   [_NUM] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_LBRC, KC_7,    KC_8,    KC_9,    KC_RBRC,                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT, XXXXXXX,
-    XXXXXXX, KC_SCLN, KC_4,    KC_5,    KC_6,    KC_EQL,                         XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_GRV,  KC_1,    KC_2,    KC_3,    KC_BSLS,                        XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_LBRC, KC_7,    KC_8,    KC_9,    KC_RBRC,                        XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, QK_BOOT, XXXXXXX,
+    KC_RBRC, KC_SCLN, KC_4,    KC_5,    KC_6,    KC_EQL,                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    KC_RPRN, KC_GRV,  KC_1,    KC_2,    KC_3,    KC_BSLS,                        XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
                                         KC_DOT,  KC_MINS, KC_0,         _______, XXXXXXX, XXXXXXX
   ),
 
   [_SYM] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR,                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT, XXXXXXX,
-    XXXXXXX, KC_COLN, KC_DLR,  KC_PERC, KC_CIRC, KC_PLUS,                        XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE,                        XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR,                        XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, QK_BOOT, XXXXXXX,
+    XXXXXXX, KC_COLN, KC_DLR,  KC_PERC, KC_CIRC, KC_PLUS,                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE,                        XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
                                         KC_LPRN, KC_UNDS, KC_RPRN,      XXXXXXX, _______, XXXXXXX
   ),
 
   [_FUN] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_F12,  KC_F7,   KC_F8,   KC_F9,   KC_SYRQ,                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT, XXXXXXX,
-    XXXXXXX, KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SCRL,                        XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_F10,  KC_F1,   KC_F2,   KC_F3,   KC_PAUS,                        XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F12,  KC_F7,   KC_F8,   KC_F9,   KC_SYRQ,                        XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, QK_BOOT, DT_UP,
+    XXXXXXX, KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SCRL,                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DT_PRNT,
+    XXXXXXX, KC_F10,  KC_F1,   KC_F2,   KC_F3,   KC_PAUS,                        XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, DT_DOWN,
                                         KC_APP,  KC_TAB, KC_SPC,        XXXXXXX, XXXXXXX, _______
   )
 
 };
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case HRM_T:
-        case HRM_N:
-            if (g_tapping_term > 20) {
-                return g_tapping_term - 20;
-            }
-            return 0;
-        default:
-            return g_tapping_term;
-    }
-}
-
 #ifdef OLED_ENABLE
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master()) {
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-  }
-  return rotation;
-}
 
-void oled_render_layer_state(void) {
+static void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case _BASE:
@@ -174,41 +136,54 @@ void oled_render_layer_state(void) {
     }
 }
 
+char     key_name;
+uint16_t last_keycode;
+uint8_t  last_row;
+uint8_t  last_col;
 
-char keylog_str[24] = {};
+static const char PROGMEM code_to_name[60] = {' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\', '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '};
 
-const char code_to_name[60] = {
-    ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-    'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\',
-    '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '};
-
-void set_keylog(uint16_t keycode, keyrecord_t *record) {
-  char name = ' ';
-    if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) ||
-        (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) { keycode = keycode & 0xFF; }
-  if (keycode < 60) {
-    name = code_to_name[keycode];
-  }
-
-  // update keylog
-  snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d : %c",
-           record->event.key.row, record->event.key.col,
-           keycode, name);
+static const char *depad_str(const char *depad_str, char depad_char) {
+    while (*depad_str == depad_char)
+        ++depad_str;
+    return depad_str;
 }
 
-void oled_render_keylog(void) {
-    oled_write(keylog_str, false);
+static void oled_render_keylog(void) {
+    oled_write_char('0' + last_row, false);
+    oled_write_P(PSTR("x"), false);
+    oled_write_char('0' + last_col, false);
+    oled_write_P(PSTR(", k"), false);
+    const char *last_keycode_str = get_u16_str(last_keycode, ' ');
+    oled_write(depad_str(last_keycode_str, ' '), false);
+    oled_write_P(PSTR(":"), false);
+    oled_write_char(key_name, false);
+    oled_advance_page(true);
 }
 
-void oled_render_logo(void) {
+// static void render_bootmagic_status(bool status) {
+//     /* Show Ctrl-Gui Swap options */
+//     static const char PROGMEM logo[][2][3] = {
+//         {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}},
+//         {{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
+//     };
+//     if (status) {
+//         oled_write_ln_P(logo[0][0], false);
+//         oled_write_ln_P(logo[0][1], false);
+//     } else {
+//         oled_write_ln_P(logo[1][0], false);
+//         oled_write_ln_P(logo[1][1], false);
+//     }
+// }
+
+__attribute__((weak)) void oled_render_logo(void) {
+    // clang-format off
     static const char PROGMEM crkbd_logo[] = {
         0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
         0};
+    // clang-format on
     oled_write_P(crkbd_logo, false);
 }
 
@@ -224,34 +199,17 @@ bool oled_task_user(void) {
 
 #endif // OLED_ENABLE
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    #ifdef OLED_ENABLE
-        set_keylog(keycode, record);
-    #endif // OLED_ENABLE
-    #ifdef RGBLIGHT_TIMEOUT
-        if (rgblight_on == false) {
-            rgblight_enable_noeeprom();
-            rgblight_on = true;
-        }
-        idle_timer = timer_read();
-        halfmin_counter = 0;
-    #endif // RGBLIGHT_TIMEOUT
-  }
-  return true;
-}
-
 #ifdef RGBLIGHT_TIMEOUT
 void matrix_scan_user(void) {
     // idle_timer needs to be set one time
     if (idle_timer == 0) idle_timer = timer_read();
 
-    if ( rgblight_on && timer_elapsed(idle_timer) > 30000) {
+    if (rgblight_on && timer_elapsed(idle_timer) > 30000) {
         halfmin_counter++;
         idle_timer = timer_read();
     }
 
-    if ( rgblight_on && halfmin_counter >= RGBLIGHT_TIMEOUT * 2) {
+    if (rgblight_on && halfmin_counter >= RGBLIGHT_TIMEOUT * 2) {
         rgblight_disable_noeeprom();
         rgblight_on = false;
         halfmin_counter = 0;
